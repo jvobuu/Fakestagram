@@ -39,7 +39,7 @@ function Post({ id, username, userImg, img, caption }) {
         await addDoc(collection(db, 'posts', id, 'comments'), {
             comment: commentToSend,
             username: session.user.username,
-            userImage: sessopm.user.image,
+            userImage: session.user.image,
             timestamp: serverTimestamp(),
         });
     };
@@ -97,7 +97,7 @@ function Post({ id, username, userImg, img, caption }) {
 
             {/* caption */}
             <p className="p-5 truncate">
-                {likes.legnth > 0 && (
+                {likes.length > 0 && (
                     <p className="font-bold mb-1">{likes.length} likes</p>
                 )}
 

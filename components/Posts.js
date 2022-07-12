@@ -7,11 +7,16 @@ function Posts() {
 
     const [posts, setPosts] = useState([]);
 
-    useEffect(() => {
-        return onSnapshot(query(collection(db, 'posts'), orderBy('timestamp', 'desc')), snapshot => {
-            setPosts(snapshot.docs);
-        });
-    }, [db]);
+    useEffect (
+        () => 
+        onSnapshot(
+            query(collection(db, "posts"), orderBy("timestamp", "desc")),
+            (snapshot) => {
+                setPosts(snapshot.docs);
+            }
+        ),
+    [db]
+    );
 
     return (
         <div>
@@ -21,7 +26,7 @@ function Posts() {
                     id={post.id} 
                     username={post.data().username}
                     userImg={post.data().profileImg}
-                    img={post.data().img}
+                    img={post.data().image}
                     caption={post.data().caption}
                 />
             ))}

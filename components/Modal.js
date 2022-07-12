@@ -13,6 +13,7 @@ function Modal() {
     const [open, setOpen] = useRecoilState(modalState);
     const filePickerRef = useRef(null);
     const captionRef = useRef(null);
+    const [loading, setLoading] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
 
     const uploadPost = async () => {
@@ -43,10 +44,10 @@ function Modal() {
         setSelectedFile(null);
     }
 
-    const addIamgeToPost = (e) => {
+    const addImageToPost = (e) => {
         const reader = new FileReader();
         if(e.target.files[0]) {
-            reader.readAdDataURL(e.target.files[0]);
+            reader.readAsDataURL(e.target.files[0]);
         };
 
         reader.onload = (readerEvent) => {
@@ -71,7 +72,7 @@ function Modal() {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <Dialogue.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                    <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
                 </Transition.Child>
 
                 <span
