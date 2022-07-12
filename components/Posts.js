@@ -1,40 +1,28 @@
 import Post from "./Post";
-
-const posts = [
-    {
-        id: "123",
-        username: 'person',
-        userImg: "https://cdn.psychologytoday.com/sites/default/files/styles/article-inline-half-caption/public/field_blog_entry_images/2018-09/shutterstock_648907024.jpg?itok=0hb44OrI",
-        img: 'https://cdn.psychologytoday.com/sites/default/files/styles/article-inline-half-caption/public/field_blog_entry_images/2018-09/shutterstock_648907024.jpg?itok=0hb44OrI',
-        caption: "This is cool!",
-    },
-    {
-        id: "123",
-        username: 'person',
-        userImg: "https://cdn.psychologytoday.com/sites/default/files/styles/article-inline-half-caption/public/field_blog_entry_images/2018-09/shutterstock_648907024.jpg?itok=0hb44OrI",
-        img: 'https://cdn.psychologytoday.com/sites/default/files/styles/article-inline-half-caption/public/field_blog_entry_images/2018-09/shutterstock_648907024.jpg?itok=0hb44OrI',
-        caption: "This is cool!",
-    },
-    {
-        id: "123",
-        username: 'person',
-        userImg: "https://cdn.psychologytoday.com/sites/default/files/styles/article-inline-half-caption/public/field_blog_entry_images/2018-09/shutterstock_648907024.jpg?itok=0hb44OrI",
-        img: 'https://cdn.psychologytoday.com/sites/default/files/styles/article-inline-half-caption/public/field_blog_entry_images/2018-09/shutterstock_648907024.jpg?itok=0hb44OrI',
-        caption: "This is cool!",
-    },
-];
+import { useEffect, useState } from "react";
+import { db } from "../firebase"
+import { onSnapshot, collection, query, orderBy } from "firebase/firestore";
 
 function Posts() {
+
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        return onSnapshot(query(collection(db, 'posts'), orderBy('timestamp', 'desc')), snapshot => {
+            setPosts(snapshot.docs);
+        });
+    }, [db]);
+
     return (
         <div>
             {posts.map((post) => ( 
                 <Post 
                     ey={post.id} 
                     id={post.id} 
-                    username={post.username}
-                    userImg={post.userImg}
-                    img={post.img}
-                    caption={post.caption}
+                    username={post.data().username}
+                    userImg={post.data().profileImg}
+                    img={post.data().img}
+                    caption={post.data().caption}
                 />
             ))}
             
