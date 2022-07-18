@@ -22,7 +22,7 @@ function Posts() {
         <div>
             {posts.map((post) => ( 
                 <Post 
-                    ey={post.id} 
+                    key={post.id} 
                     id={post.id} 
                     username={post.data().username}
                     userImg={post.data().profileImg}
