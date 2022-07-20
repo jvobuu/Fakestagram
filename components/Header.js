@@ -20,17 +20,19 @@ import { addDoc, collection, serverTimestamp, updateDoc, doc } from "@firebase/f
 
 function Header() {
 
+    
+
     const { data: session} = useSession();
     const [open, setOpen] = useRecoilState(modalState);
     const router = useRouter();
 
     const createUser = async () => {
-
+        
         const docRef = await addDoc(collection(db, 'users'), {
             username: session.user.username,
             profileImg: session.user.image,
             lastSeen: serverTimestamp()
-        })
+        }, {merge: true})
     }
 
     return (

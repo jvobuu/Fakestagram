@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Sidebar from "../components/Sidebar"
 import Header from "../components/Header"
-import Chat from "../components/Chat"
+import ChatScreen from "../components/ChatScreen"
 
 function Message() {
 
@@ -20,7 +20,7 @@ function Message() {
                 <Sidebar />
           </section>
           <section className="col-span-3">
-                <Chat />
+                <ChatScreen />
           </section>
         </div>
     </div>
