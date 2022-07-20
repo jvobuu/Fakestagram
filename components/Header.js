@@ -14,12 +14,24 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { modalState } from "../atoms/modalAtom";
+import { db, storage } from "../firebase";
+import { addDoc, collection, serverTimestamp, updateDoc, doc } from "@firebase/firestore";
+
 
 function Header() {
 
     const { data: session} = useSession();
     const [open, setOpen] = useRecoilState(modalState);
     const router = useRouter();
+
+    const createUser = async () => {
+
+        const docRef = await addDoc(collection(db, 'users'), {
+            username: session.user.username,
+            profileImg: session.user.image,
+            lastSeen: serverTimestamp()
+        })
+    }
 
     return (
         <div className="shadow-sm border-b bg-white sticky top-0 z-50">
@@ -70,7 +82,7 @@ function Header() {
                     </div>
                     <PlusCircleIcon onClick={() => setOpen(true)} className="navBtn"/>
                     <UserGroupIcon className="navBtn"/>
-                    <HeartIcon className="navBtn" />
+                    <HeartIcon onClick={createUser} className="navBtn" />
                     <img 
                         onClick={signOut}
                         src={session.user.image}
