@@ -1,10 +1,29 @@
 import React from 'react'
 import { SearchIcon } from "@heroicons/react/outline"
 import SidebarChat from "./SidebarChat"
+import * as EmailValidator from "email-validator"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { auth, db} from "../firebase"
 
 function Sidebar() {
+
+    const [user] = useAuthState(auth);
+
+    const createChat = () => {
+        const input = prompt('Please enter an email address for the user you want to chat with');
+
+        if (!input) return null;
+
+        if (EmailValidator.validate(input)) {
+            //add caht into database
+            db.collection('chats').add({
+                users: []
+            })
+        }
+    }
+
   return (
-    <div class="w-64">
+    <div class="">
         <div class="overflow-y-auto py-4 px-3 bg-gray-100 rounded dark:bg-gray-800 ">
             <div className="max-w-xs">
                         <div className="relative mt-1 p-3 rounded-md">
@@ -19,8 +38,8 @@ function Sidebar() {
                             />
                     </div>
             </div>
-            <div>
-                
+            <div className="w-full hover:bg-gray-200 border-t-2 border-b-2 border-white text-center bg-white font-bold">
+                <button onclick={createChat}>START A NEW CHAT</button>
             </div>
             <div className="max-w-xs p-[20px] cursor-pointer space-y-4 ">
                 <SidebarChat />

@@ -5,6 +5,7 @@ import Header from "../components/Header"
 import Chat from "../components/Chat"
 
 function Message() {
+
   return (
     <div className="bg-gray-50 h-screen overflow-y-scroll scrollbar-hide">
         <Head>
